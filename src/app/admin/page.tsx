@@ -276,7 +276,7 @@ export default function AdminPage() {
                     required
                     value={formData.question}
                     onChange={(e) => setFormData({ ...formData, question: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-900"
                     rows={3}
                     placeholder="Enter the question..."
                   />
@@ -290,7 +290,7 @@ export default function AdminPage() {
                     type="text"
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-900"
                     placeholder="General"
                   />
                 </div>
@@ -306,7 +306,7 @@ export default function AdminPage() {
                         required
                         value={formData[`option_${option}` as keyof typeof formData]}
                         onChange={(e) => setFormData({ ...formData, [`option_${option}`]: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-900"
                         placeholder={`Enter option ${option.toUpperCase()}...`}
                       />
                     </div>
@@ -320,7 +320,7 @@ export default function AdminPage() {
                   <select
                     value={formData.correct_answer}
                     onChange={(e) => setFormData({ ...formData, correct_answer: e.target.value as 'A' | 'B' | 'C' | 'D' })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-900"
                   >
                     <option value="A">A</option>
                     <option value="B">B</option>
