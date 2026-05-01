@@ -136,7 +136,7 @@ export default function ExamPage() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
         <div className="text-center">
           <div className="text-6xl mb-4 animate-bounce">🦛</div>
-          <div className="text-xl text-gray-600">Loading questions...</div>
+          <div className="text-xl text-gray-700">Loading questions...</div>
         </div>
       </div>
     )
@@ -148,7 +148,7 @@ export default function ExamPage() {
         <div className="text-center">
           <div className="text-6xl mb-4">📚</div>
           <h2 className="text-2xl font-bold text-gray-900 mb-4">No Questions Available</h2>
-          <p className="text-gray-600 mb-6">Please ask an admin to add some questions!</p>
+          <p className="text-gray-700 mb-6">Please ask an admin to add some questions!</p>
           <Link
             href="/dashboard"
             className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
@@ -175,7 +175,7 @@ export default function ExamPage() {
               <div className="text-2xl font-bold text-gray-900">
                 {results.score} / {results.total}
               </div>
-              <div className="text-xl text-gray-600">
+              <div className="text-xl text-gray-700">
                 {results.percentage}%
               </div>
               <div className={`inline-flex px-4 py-2 text-lg font-semibold rounded-full ${
@@ -227,7 +227,7 @@ export default function ExamPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-4">
-              <Link href="/dashboard" className="text-gray-600 hover:text-gray-900">
+              <Link href="/dashboard" className="text-gray-700 hover:text-gray-900">
                 ← Back
               </Link>
               <div className="flex items-center space-x-2">
@@ -235,7 +235,7 @@ export default function ExamPage() {
                 <h1 className="text-xl font-bold text-gray-900">Hippo Study Exam</h1>
               </div>
             </div>
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-700">
               Question {currentQuestionIndex + 1} of {questions.length}
             </div>
           </div>
@@ -306,7 +306,7 @@ export default function ExamPage() {
               ← Previous
             </button>
 
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-700">
               {Object.keys(answers).length} of {questions.length} answered
             </div>
 

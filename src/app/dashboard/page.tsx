@@ -70,7 +70,7 @@ export default function DashboardPage() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
         <div className="text-center">
           <div className="text-6xl mb-4 animate-bounce">🦛</div>
-          <div className="text-xl text-gray-600">Loading your dashboard...</div>
+          <div className="text-xl text-gray-700">Loading your dashboard...</div>
         </div>
       </div>
     )
@@ -86,7 +86,7 @@ export default function DashboardPage() {
               <span className="text-3xl">🦛</span>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">Hippo Study</h1>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-700">
                   Hello, {user?.email?.split('@')[0] || 'Student'}! 👋
                 </p>
               </div>
@@ -139,25 +139,25 @@ export default function DashboardPage() {
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Your Stats</h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Total Exams:</span>
+                  <span className="text-gray-700">Total Exams:</span>
                   <span className="font-semibold">{attempts.length}</span>
                 </div>
                 {attempts.length > 0 && (
                   <>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Best Score:</span>
+                      <span className="text-gray-700">Best Score:</span>
                       <span className="font-semibold text-green-600">
                         {Math.max(...attempts.map(a => calculatePercentage(a.score, a.total)))}%
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Average Score:</span>
+                      <span className="text-gray-700">Average Score:</span>
                       <span className="font-semibold">
                         {Math.round(attempts.reduce((sum, a) => sum + calculatePercentage(a.score, a.total), 0) / attempts.length)}%
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Pass Rate:</span>
+                      <span className="text-gray-700">Pass Rate:</span>
                       <span className="font-semibold">
                         {Math.round((attempts.filter(a => getResultStatus(a.score, a.total) === 'Pass').length / attempts.length) * 100)}%
                       </span>
@@ -176,7 +176,7 @@ export default function DashboardPage() {
               {attempts.length === 0 ? (
                 <div className="text-center py-8">
                   <div className="text-4xl mb-4">📚</div>
-                  <p className="text-gray-600 mb-4">You haven't taken any exams yet!</p>
+                  <p className="text-gray-700 mb-4">You haven't taken any exams yet!</p>
                   <Link
                     href="/exam"
                     className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"

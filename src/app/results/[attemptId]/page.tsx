@@ -64,7 +64,7 @@ export default function ResultsPage() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
         <div className="text-center">
           <div className="text-6xl mb-4 animate-bounce">🦛</div>
-          <div className="text-xl text-gray-600">Loading results...</div>
+          <div className="text-xl text-gray-700">Loading results...</div>
         </div>
       </div>
     )
@@ -101,7 +101,7 @@ export default function ResultsPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-4">
-              <Link href="/dashboard" className="text-gray-600 hover:text-gray-900">
+              <Link href="/dashboard" className="text-gray-700 hover:text-gray-900">
                 ← Back to Dashboard
               </Link>
               <div className="flex items-center space-x-2">
@@ -126,15 +126,15 @@ export default function ResultsPage() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
               <div className="text-center">
                 <div className="text-2xl font-bold text-gray-900">{attempt.score}</div>
-                <div className="text-sm text-gray-600">Correct</div>
+                <div className="text-sm text-gray-700">Correct</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-gray-900">{attempt.total}</div>
-                <div className="text-sm text-gray-600">Total</div>
+                <div className="text-sm text-gray-700">Total</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-gray-900">{percentage}%</div>
-                <div className="text-sm text-gray-600">Score</div>
+                <div className="text-sm text-gray-700">Score</div>
               </div>
               <div className="text-center">
                 <div className={`inline-flex px-4 py-2 text-lg font-semibold rounded-full ${
@@ -181,7 +181,7 @@ export default function ResultsPage() {
               Correct Only ({correctAnswers.length})
             </button>
             {!showCorrectOnly && (
-              <div className="flex items-center px-4 py-2 text-sm text-gray-600">
+              <div className="flex items-center px-4 py-2 text-sm text-gray-700">
                 <span className="text-red-600 font-semibold">{incorrectAnswers.length} incorrect</span>
               </div>
             )}
@@ -203,7 +203,7 @@ export default function ResultsPage() {
                     <span className="text-sm font-medium text-gray-500">
                       Question {index + 1}
                     </span>
-                    <span className="inline-flex px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-full">
+                    <span className="inline-flex px-2 py-1 text-xs font-medium text-gray-700 bg-gray-100 rounded-full">
                       {answer.question.category || 'General'}
                     </span>
                     <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${

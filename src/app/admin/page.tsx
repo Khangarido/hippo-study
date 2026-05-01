@@ -137,7 +137,7 @@ export default function AdminPage() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
         <div className="text-center">
           <div className="text-6xl mb-4 animate-bounce">🦛</div>
-          <div className="text-xl text-gray-600">Loading admin panel...</div>
+          <div className="text-xl text-gray-700">Loading admin panel...</div>
         </div>
       </div>
     )
@@ -150,7 +150,7 @@ export default function AdminPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-4">
-              <Link href="/dashboard" className="text-gray-600 hover:text-gray-900">
+              <Link href="/dashboard" className="text-gray-700 hover:text-gray-900">
                 ← Back to Dashboard
               </Link>
               <div className="flex items-center space-x-2">
@@ -158,7 +158,7 @@ export default function AdminPage() {
                 <h1 className="text-xl font-bold text-gray-900">Admin Panel</h1>
               </div>
             </div>
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-700">
               Total Questions: {questions.length}
             </div>
           </div>
@@ -222,7 +222,7 @@ export default function AdminPage() {
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="inline-flex px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-full">
+                        <span className="inline-flex px-2 py-1 text-xs font-medium text-gray-700 bg-gray-100 rounded-full">
                           {question.category || 'General'}
                         </span>
                       </td>
@@ -362,7 +362,7 @@ export default function AdminPage() {
               <h2 className="text-xl font-bold text-gray-900 mb-4">
                 Confirm Delete
               </h2>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-700 mb-6">
                 Are you sure you want to delete this question? This action cannot be undone.
               </p>
               <div className="flex justify-end space-x-3">
