@@ -20,10 +20,14 @@ export default function LoginPage() {
     setLoading(true)
     setError('')
 
-    const { error } = await signIn(email, password)
-    if (error) {
-      setError(error.message)
+    console.log('🔍 Login page: Starting sign in process')
+    const response = await signIn(email, password)
+    
+    if (response.error) {
+      console.log('❌ Login page: Sign in failed:', response.error)
+      setError(response.error.message)
     } else {
+      console.log('✅ Login page: Sign in successful, redirecting to dashboard')
       router.push('/dashboard')
     }
     
@@ -35,15 +39,22 @@ export default function LoginPage() {
     setLoading(true)
     setError('')
 
-    const { error } = await signUp(email, password)
-    if (error) {
-      setError(error.message)
+    console.log('🔍 Login page: Starting sign up process')
+    const response = await signUp(email, password)
+    
+    if (response.error) {
+      console.log('❌ Login page: Sign up failed:', response.error)
+      setError(response.error.message)
     } else {
+      console.log('✅ Login page: Sign up successful, attempting auto login')
+      
       // Auto login after successful signup
-      const { error: signInError } = await signIn(email, password)
-      if (signInError) {
-        setError(signInError.message)
+      const signInResponse = await signIn(email, password)
+      if (signInResponse.error) {
+        console.log('❌ Login page: Auto login after signup failed:', signInResponse.error)
+        setError(`Account created but login failed: ${signInResponse.error.message}`)
       } else {
+        console.log('✅ Login page: Auto login successful, redirecting to dashboard')
         router.push('/dashboard')
       }
     }
