@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 import { useAuth } from '@/contexts/AuthContext'
 
 export default function LoginPage() {
@@ -12,7 +11,6 @@ export default function LoginPage() {
   const [message, setMessage] = useState('')
   
   const { supabase } = useAuth()
-  const router = useRouter()
 
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -20,7 +18,6 @@ export default function LoginPage() {
     setError('')
     setMessage('')
 
-    console.log('📧 Sending magic link to:', email)
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
@@ -29,11 +26,9 @@ export default function LoginPage() {
     })
 
     if (error) {
-      console.log('❌ Magic link failed:', error)
       setError(error.message)
     } else {
-      console.log('✅ Magic link sent successfully')
-      setMessage('Check your email for the magic link! Click it to sign in.')
+      setMessage('Check your email for a login link!')
     }
     
     setLoading(false)

@@ -9,8 +9,6 @@ interface AuthContextType {
   session: Session | null
   loading: boolean
   isAdmin: boolean
-  signIn: (email: string, password: string) => Promise<{ error: any }>
-  signUp: (email: string, password: string) => Promise<{ error: any }>
   signOut: () => Promise<void>
   supabase: any
 }
@@ -65,36 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
-  const signIn = async (email: string, password: string) => {
-    console.log('🔑 Attempting sign in with:', { email })
-    const response = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-    console.log('🔑 Sign in response:', {
-      error: response.error,
-      data: response.data,
-      user: response.data.user,
-      session: response.data.session
-    })
-    return { error: response.error, data: response.data }
-  }
-
-  const signUp = async (email: string, password: string) => {
-    console.log('📝 Attempting sign up with:', { email })
-    const response = await supabase.auth.signUp({
-      email,
-      password,
-    })
-    console.log('📝 Sign up response:', {
-      error: response.error,
-      data: response.data,
-      user: response.data.user,
-      session: response.data.session
-    })
-    return { error: response.error, data: response.data }
-  }
-
+  
   const signOut = async () => {
     await supabase.auth.signOut()
   }
@@ -104,8 +73,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     session,
     loading,
     isAdmin,
-    signIn,
-    signUp,
     signOut,
     supabase,
   }
