@@ -7,83 +7,36 @@ import { useAuth } from '@/contexts/AuthContext'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [isSignUp, setIsSignUp] = useState(false)
-  const [passwordError, setPasswordError] = useState('')
+  const [message, setMessage] = useState('')
   
-  const { signIn, signUp } = useAuth()
+  const { supabase } = useAuth()
   const router = useRouter()
 
-  const handleSignIn = async (e: React.FormEvent) => {
+  const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError('')
+    setMessage('')
 
-    console.log('🔍 Login page: Starting sign in process')
-    const response = await signIn(email, password)
-    
-    if (response.error) {
-      console.log('❌ Login page: Sign in failed:', response.error)
-      setError(response.error.message)
-    } else {
-      console.log('✅ Login page: Sign in successful, redirecting to dashboard')
-      router.push('/dashboard')
-    }
-    
-    setLoading(false)
-  }
-
-  const validatePassword = (password: string) => {
-    if (password.length < 6) {
-      setPasswordError('Password must be at least 6 characters')
-      return false
-    }
-    setPasswordError('')
-    return true
-  }
-
-  const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-    
-    // Client-side validation
-    if (!validatePassword(password)) {
-      return
-    }
-
-    setLoading(true)
-
-    console.log('🔍 Login page: Starting sign up process')
-    const response = await signUp(email, password)
-    
-    if (response.error) {
-      console.log('❌ Login page: Sign up failed:', response.error)
-      setError(response.error.message)
-    } else {
-      console.log('✅ Login page: Sign up successful, attempting auto login')
-      
-      // Auto login after successful signup
-      const signInResponse = await signIn(email, password)
-      if (signInResponse.error) {
-        console.log('❌ Login page: Auto login after signup failed:', signInResponse.error)
-        setError(`Account created but login failed: ${signInResponse.error.message}`)
-      } else {
-        console.log('✅ Login page: Auto login successful, redirecting to dashboard')
-        router.push('/dashboard')
+    console.log('📧 Sending magic link to:', email)
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: `${window.location.origin}/dashboard`
       }
+    })
+
+    if (error) {
+      console.log('❌ Magic link failed:', error)
+      setError(error.message)
+    } else {
+      console.log('✅ Magic link sent successfully')
+      setMessage('Check your email for the magic link! Click it to sign in.')
     }
     
     setLoading(false)
-  }
-
-  const toggleMode = () => {
-    setIsSignUp(!isSignUp)
-    setError('')
-    setPasswordError('')
-    setEmail('')
-    setPassword('')
   }
 
   return (
@@ -95,92 +48,28 @@ export default function LoginPage() {
             Hippo Study
           </h2>
           <p className="text-gray-700">
-            {isSignUp ? 'Create your account' : 'Welcome back!'}
+            Enter your email to sign in
           </p>
         </div>
 
         <div className="rounded-lg shadow-md bg-white p-8">
-          {/* Tab Navigation */}
-          <div className="flex mb-6 border-b border-gray-200">
-            <button
-              type="button"
-              onClick={() => !isSignUp && toggleMode()}
-              className={`flex-1 py-2 px-4 text-center font-medium text-sm border-b-2 transition-colors ${
-                !isSignUp 
-                  ? 'border-blue-500 text-blue-600' 
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
-              }`}
-            >
-              Sign In
-            </button>
-            <button
-              type="button"
-              onClick={() => isSignUp && toggleMode()}
-              className={`flex-1 py-2 px-4 text-center font-medium text-sm border-b-2 transition-colors ${
-                isSignUp 
-                  ? 'border-blue-500 text-blue-600' 
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
-              }`}
-            >
-              Sign Up
-            </button>
-          </div>
-
-          <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className="space-y-6">
-            <div className="space-y-4">
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                  Email address
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-black"
-                  style={{ color: "black !important" }}
-                  placeholder="Enter your email"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                  Password
-                </label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete={isSignUp ? "new-password" : "current-password"}
-                  required
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value)
-                    // Clear password error when user starts typing
-                    if (passwordError && e.target.value.length >= 6) {
-                      setPasswordError('')
-                    }
-                  }}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-black ${
-                    passwordError ? 'border-red-300' : 'border-gray-300'
-                  }`}
-                  style={{ color: "black !important" }}
-                  placeholder="Enter your password"
-                />
-                {isSignUp && (
-                  <p className="mt-1 text-sm text-gray-500">
-                    Password must be at least 6 characters
-                  </p>
-                )}
-                {passwordError && (
-                  <p className="mt-1 text-sm text-red-600">
-                    {passwordError}
-                  </p>
-                )}
-              </div>
+          <form onSubmit={handleEmailAuth} className="space-y-6">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                Email address
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-black"
+                style={{ color: "black !important" }}
+                placeholder="Enter your email"
+              />
             </div>
 
             {error && (
@@ -189,9 +78,15 @@ export default function LoginPage() {
               </div>
             )}
 
+            {message && (
+              <div className="p-3 rounded-md text-sm bg-blue-50 text-blue-700">
+                {message}
+              </div>
+            )}
+
             <button
               type="submit"
-              disabled={loading || !email || !password}
+              disabled={loading || !email}
               className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {loading ? (
@@ -200,24 +95,17 @@ export default function LoginPage() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  {isSignUp ? 'Creating account...' : 'Signing in...'}
+                  Sending magic link...
                 </span>
               ) : (
-                <span>{isSignUp ? 'Create Account' : 'Sign In'}</span>
+                <span>Send Magic Link</span>
               )}
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
-              <button
-                type="button"
-                onClick={toggleMode}
-                className="font-medium text-blue-600 hover:text-blue-500"
-              >
-                {isSignUp ? 'Sign in here' : 'Create one here'}
-              </button>
+              We'll email you a magic link for instant sign in
             </p>
           </div>
         </div>
