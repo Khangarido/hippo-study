@@ -11,6 +11,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [isSignUp, setIsSignUp] = useState(false)
+  const [passwordError, setPasswordError] = useState('')
   
   const { signIn, signUp } = useAuth()
   const router = useRouter()
@@ -34,10 +35,25 @@ export default function LoginPage() {
     setLoading(false)
   }
 
+  const validatePassword = (password: string) => {
+    if (password.length < 6) {
+      setPasswordError('Password must be at least 6 characters')
+      return false
+    }
+    setPasswordError('')
+    return true
+  }
+
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault()
-    setLoading(true)
     setError('')
+    
+    // Client-side validation
+    if (!validatePassword(password)) {
+      return
+    }
+
+    setLoading(true)
 
     console.log('🔍 Login page: Starting sign up process')
     const response = await signUp(email, password)
@@ -65,6 +81,7 @@ export default function LoginPage() {
   const toggleMode = () => {
     setIsSignUp(!isSignUp)
     setError('')
+    setPasswordError('')
     setEmail('')
     setPassword('')
   }
@@ -140,11 +157,29 @@ export default function LoginPage() {
                   autoComplete={isSignUp ? "new-password" : "current-password"}
                   required
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-black"
+                  onChange={(e) => {
+                    setPassword(e.target.value)
+                    // Clear password error when user starts typing
+                    if (passwordError && e.target.value.length >= 6) {
+                      setPasswordError('')
+                    }
+                  }}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-black ${
+                    passwordError ? 'border-red-300' : 'border-gray-300'
+                  }`}
                   style={{ color: "black !important" }}
                   placeholder="Enter your password"
                 />
+                {isSignUp && (
+                  <p className="mt-1 text-sm text-gray-500">
+                    Password must be at least 6 characters
+                  </p>
+                )}
+                {passwordError && (
+                  <p className="mt-1 text-sm text-red-600">
+                    {passwordError}
+                  </p>
+                )}
               </div>
             </div>
 
